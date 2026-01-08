@@ -16,7 +16,6 @@
 <body>
   <a class="skip" href="#panel-1">Zum Inhalt springen</a>
 
-  <!-- Top Bar -->
   <header class="topbar" role="banner">
     <div class="topbar__inner">
       <div class="brand" aria-label="Marke">
@@ -34,13 +33,13 @@
         <a href="#panel-8">Kontakt</a>
       </nav>
 
-      <button class="pill" id="themeBtn" type="button" aria-pressed="false" aria-label="Theme umschalten">
-        Light · On
-      </button>
+      <div class="topbar__actions">
+        <a class="pill pill--lang" href="/en/" aria-label="Switch to English">EN</a>
+        <button class="pill" id="themeBtn" type="button" aria-pressed="false" aria-label="Theme umschalten">Light · On</button>
+      </div>
     </div>
   </header>
 
-  <!-- Dot Navigation -->
   <aside class="dots" aria-label="Sektionen">
     <button class="dot is-active" data-to="panel-1" aria-label="Zu Profil"></button>
     <button class="dot" data-to="panel-2" aria-label="Zu Fokus"></button>
@@ -54,11 +53,9 @@
 
   <main class="snap" id="snapRoot">
 
-    <!-- 1: HERO -->
     <section class="panel" id="panel-1" data-bg="assets/images/street_02.jpg">
       <div class="panel__bg" aria-hidden="true"></div>
       <div class="panel__shade" aria-hidden="true"></div>
-
       <div class="panel__content">
         <div class="glass reveal">
           <p class="eyebrow">Portfolio</p>
@@ -67,19 +64,16 @@
             Unternehmerin · Fotografin · Physiotherapeutin.<br>
             Ich baue Wirkung mit Struktur – und Bilder mit Haltung.
           </p>
-
           <div class="chips">
             <span class="chip">Editorial</span>
             <span class="chip">Konzert · Event</span>
             <span class="chip">Brand-Content</span>
             <span class="chip">Urban Observation</span>
           </div>
-
           <div class="ctaRow">
             <a class="cta" href="#panel-8">Kontakt</a>
             <a class="cta ghost" href="https://portfolio.rebellemedia.de/" target="_blank" rel="noopener">Online Portfolio</a>
           </div>
-
           <div class="mini">
             <span class="mini__label">Prinzip</span>
             <span class="mini__text">Qualität ist leise. Aber sichtbar.</span>
@@ -88,11 +82,9 @@
       </div>
     </section>
 
-    <!-- 2: FOKUS -->
     <section class="panel" id="panel-2" data-bg="assets/images/street_03.jpg">
       <div class="panel__bg" aria-hidden="true"></div>
       <div class="panel__shade" aria-hidden="true"></div>
-
       <div class="panel__content">
         <div class="glass reveal">
           <p class="eyebrow">CH-Business</p>
@@ -101,7 +93,6 @@
             Ruhig, präzise, langfristig. Keine leeren Versprechen – nur saubere Entscheidungen
             und ein Ergebnis, das auch unter Druck steht.
           </p>
-
           <div class="grid2">
             <div class="card">
               <h3>Wie ich ticke</h3>
@@ -116,25 +107,19 @@
       </div>
     </section>
 
-    <!-- 3: HALTUNG -->
     <section class="panel" id="panel-3" data-bg="assets/images/urban_01.jpg">
       <div class="panel__bg" aria-hidden="true"></div>
       <div class="panel__shade" aria-hidden="true"></div>
-
       <div class="panel__content">
         <div class="glass reveal">
           <p class="eyebrow">Haltung</p>
           <h2 class="h2">Ich erzähle nicht alles.<br>Ich zeige das Richtige.</h2>
-          <p class="lead">
-            Storytelling ohne Kitsch. Ästhetik ohne Deko. Klarheit ohne Kälte.
-          </p>
-
+          <p class="lead">Storytelling ohne Kitsch. Ästhetik ohne Deko. Klarheit ohne Kälte.</p>
           <ul class="list">
             <li><span class="bullet"></span><span>Diskrete Präsenz statt Selbstdarstellung</span></li>
             <li><span class="bullet"></span><span>Editorial Feeling mit Struktur</span></li>
             <li><span class="bullet"></span><span>Wirkung im Bild: Rhythmus, Linie, Atem</span></li>
           </ul>
-
           <div class="mini">
             <span class="mini__label">Arbeitsweise</span>
             <span class="mini__text">Ich beobachte, bevor ich urteile.</span>
@@ -143,11 +128,9 @@
       </div>
     </section>
 
-    <!-- 4: ARBEITEN -->
     <section class="panel" id="panel-4" data-bg="assets/images/street_01.jpg">
       <div class="panel__bg" aria-hidden="true"></div>
       <div class="panel__shade" aria-hidden="true"></div>
-
       <div class="panel__content">
         <div class="glass reveal">
           <p class="eyebrow">Was ich mache</p>
@@ -156,50 +139,29 @@
             Ich kombiniere Bildsprache, Struktur und Gefühl – damit Marken nicht lauter werden müssen,
             sondern klarer.
           </p>
-
           <div class="grid3">
-            <div class="stat">
-              <div class="stat__num">Editorial</div>
-              <div class="stat__label">Bildwelten</div>
-            </div>
-            <div class="stat">
-              <div class="stat__num">Event</div>
-              <div class="stat__label">Präsenz</div>
-            </div>
-            <div class="stat">
-              <div class="stat__num">Brand</div>
-              <div class="stat__label">Wirkung</div>
-            </div>
+            <div class="stat"><div class="stat__num">Editorial</div><div class="stat__label">Bildwelten</div></div>
+            <div class="stat"><div class="stat__num">Event</div><div class="stat__label">Präsenz</div></div>
+            <div class="stat"><div class="stat__num">Brand</div><div class="stat__label">Wirkung</div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5: FOTOGRAFIE -->
     <section class="panel" id="panel-5" data-bg="assets/images/street_02.jpg">
       <div class="panel__bg" aria-hidden="true"></div>
       <div class="panel__shade" aria-hidden="true"></div>
-
       <div class="panel__content">
         <div class="glass reveal">
           <p class="eyebrow">Fotografie</p>
           <h2 class="h2">Konzert · Event · Editorial.</h2>
           <p class="lead">
-            Wenn du Bildmaterial brauchst, das nicht nach Werbung aussieht –
-            sondern nach Haltung.
+            Wenn du Bildmaterial brauchst, das nicht nach Werbung aussieht – sondern nach Haltung.
           </p>
-
           <div class="grid2">
-            <div class="card">
-              <h3>Konzert / Event</h3>
-              <p>Bewegung, Licht, Nähe – ohne die Wahrheit zu glätten.</p>
-            </div>
-            <div class="card">
-              <h3>Editorial / Brand</h3>
-              <p>Reduziert, hochwertig, klar. Für Premium-Umfelder.</p>
-            </div>
+            <div class="card"><h3>Konzert / Event</h3><p>Bewegung, Licht, Nähe – ohne die Wahrheit zu glätten.</p></div>
+            <div class="card"><h3>Editorial / Brand</h3><p>Reduziert, hochwertig, klar. Für Premium-Umfelder.</p></div>
           </div>
-
           <div class="ctaRow">
             <a class="cta ghost" href="https://portfolio.rebellemedia.de/" target="_blank" rel="noopener">Portfolio ansehen</a>
             <a class="cta" href="#panel-8">Kontakt</a>
@@ -208,20 +170,17 @@
       </div>
     </section>
 
-    <!-- 6: ZUSAMMENARBEIT -->
     <section class="panel" id="panel-6" data-bg="assets/images/street_03.jpg">
       <div class="panel__bg" aria-hidden="true"></div>
       <div class="panel__shade" aria-hidden="true"></div>
-
       <div class="panel__content">
         <div class="glass reveal">
           <p class="eyebrow">Zusammenarbeit</p>
           <h2 class="h2">Wenn du Qualität willst,<br>die nicht schreit.</h2>
           <p class="lead">
-            Kooperationen, Brand-Content, Editorials, Konzertsessions.
-            Klarer Ablauf, saubere Kommunikation, ruhige Umsetzung.
+            Kooperationen, Brand-Content, Editorials, Konzertsessions. Klarer Ablauf, saubere Kommunikation,
+            ruhige Umsetzung.
           </p>
-
           <ul class="list">
             <li><span class="bullet"></span><span>Bildstrecken & Editorials</span></li>
             <li><span class="bullet"></span><span>Brand-Content mit Substanz</span></li>
@@ -231,7 +190,6 @@
       </div>
     </section>
 
-    <!-- 7: RECENT WORK (nur Street/Urban) -->
     <section class="panel panel--clean" id="panel-7">
       <div class="panel__content">
         <div class="cleanHead reveal">
@@ -241,18 +199,10 @@
         </div>
 
         <div class="gallery reveal delay-150" aria-label="Fotogalerie recent work">
-          <figure class="shot">
-            <img src="assets/images/street_01.jpg" alt="Recent work 01" loading="lazy">
-          </figure>
-          <figure class="shot">
-            <img src="assets/images/street_02.jpg" alt="Recent work 02" loading="lazy">
-          </figure>
-          <figure class="shot">
-            <img src="assets/images/street_03.jpg" alt="Recent work 03" loading="lazy">
-          </figure>
-          <figure class="shot">
-            <img src="assets/images/urban_01.jpg" alt="Recent work 04" loading="lazy">
-          </figure>
+          <figure class="shot"><img src="assets/images/street_01.jpg" alt="Recent work 01" loading="lazy"></figure>
+          <figure class="shot"><img src="assets/images/street_02.jpg" alt="Recent work 02" loading="lazy"></figure>
+          <figure class="shot"><img src="assets/images/street_03.jpg" alt="Recent work 03" loading="lazy"></figure>
+          <figure class="shot"><img src="assets/images/urban_01.jpg" alt="Recent work 04" loading="lazy"></figure>
         </div>
 
         <div class="cleanFoot reveal delay-150">
@@ -264,19 +214,13 @@
       </div>
     </section>
 
-    <!-- 8: FINALE (zwei Landscape nebeneinander auf Desktop) -->
     <section class="panel panel--final" id="panel-8">
       <div class="panel__content">
         <div class="finalStack reveal">
           <div class="finalGrid" aria-label="Finale Landschaftsbilder">
-            <figure class="finalShot">
-              <img src="assets/images/landscape_final_01.jpg" alt="Landscape – layers and quiet" loading="lazy">
-            </figure>
-            <figure class="finalShot">
-              <img src="assets/images/landscape_final_02.jpg" alt="River – light and mist" loading="lazy">
-            </figure>
+            <figure class="finalShot"><img src="assets/images/landscape_final_01.jpg" alt="Landscape – layers and quiet" loading="lazy"></figure>
+            <figure class="finalShot"><img src="assets/images/landscape_final_02.jpg" alt="River – light and mist" loading="lazy"></figure>
           </div>
-
           <p class="finalLine">Raum wirkt, wenn man ihn lässt.</p>
         </div>
 
@@ -285,25 +229,10 @@
           <h2 class="h2">Anfragen</h2>
 
           <div class="contact">
-            <a class="contact__item" href="mailto:rebelle.media.creator@gmail.com">
-              <span class="contact__k">Mail</span>
-              <span class="contact__v">rebelle.media.creator@gmail.com</span>
-            </a>
-
-            <a class="contact__item" href="https://portfolio.rebellemedia.de/" target="_blank" rel="noopener">
-              <span class="contact__k">Portfolio</span>
-              <span class="contact__v">portfolio.rebellemedia.de</span>
-            </a>
-
-            <a class="contact__item" href="https://newwomanintheshop.com" target="_blank" rel="noopener">
-              <span class="contact__k">Shop</span>
-              <span class="contact__v">newwomanintheshop.com</span>
-            </a>
-
-            <a class="contact__item" href="https://rebellemedia.de" target="_blank" rel="noopener">
-              <span class="contact__k">Website</span>
-              <span class="contact__v">rebellemedia.de</span>
-            </a>
+            <a class="contact__item" href="mailto:rebelle.media.creator@gmail.com"><span class="contact__k">Mail</span><span class="contact__v">rebelle.media.creator@gmail.com</span></a>
+            <a class="contact__item" href="https://portfolio.rebellemedia.de/" target="_blank" rel="noopener"><span class="contact__k">Portfolio</span><span class="contact__v">portfolio.rebellemedia.de</span></a>
+            <a class="contact__item" href="https://newwomanintheshop.com" target="_blank" rel="noopener"><span class="contact__k">Shop</span><span class="contact__v">newwomanintheshop.com</span></a>
+            <a class="contact__item" href="https://rebellemedia.de" target="_blank" rel="noopener"><span class="contact__k">Website</span><span class="contact__v">rebellemedia.de</span></a>
           </div>
 
           <footer class="rb-footer">
