@@ -3,17 +3,286 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RE:BELLE™ Media | Preisliste</title>
-  <meta name="description" content="Preisliste – Geburtstagsaktion (-50%). Fotografie, Design, Storytelling, White-Label." />
+  <title>RE:BELLE™ Media | Angebote</title>
+  <meta name="description" content="Drei Ebenen. Keine Kompromisse. Markenwahrnehmung, die wirkt." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant:wght@400;600&family=Nunito+Sans:wght@400;600;800;900&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:wght@400;600;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ── tiers ── */
+    .tiers {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      margin-top: 18px;
+    }
+    @media (min-width: 900px) {
+      .tiers { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    }
+
+    .tier {
+      position: relative;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 30px 24px 26px;
+      background: linear-gradient(160deg, var(--glass), var(--glass2));
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: box-shadow .25s ease, border-color .25s ease;
+    }
+    .tier:hover {
+      border-color: var(--stroke2);
+      box-shadow: 0 28px 70px rgba(0,0,0,.16);
+    }
+
+    /* Signature – dark */
+    .tier--signature {
+      background: linear-gradient(160deg, rgba(20,22,27,.97), rgba(20,22,27,.90));
+      border-color: rgba(255,255,255,.13);
+    }
+    .tier--signature .tier__number,
+    .tier--signature .tier__label,
+    .tier--signature h3,
+    .tier--signature .tier__hook,
+    .tier--signature .tier__method,
+    .tier--signature .tier__price,
+    .tier--signature .tier__price-note { color: #f2f2f2; }
+    .tier--signature .tier__subhook,
+    .tier--signature .tier__item,
+    .tier--signature .tier__footer { color: rgba(242,242,242,.65); }
+    .tier--signature .tier__divider { background: rgba(255,255,255,.10); }
+    .tier--signature .tier__item::before { color: var(--accent); }
+    .tier--signature .tier__cta { background: #f2f2f2; color: #14161b; border-color: #f2f2f2; }
+    .tier--signature .tier__cta:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .tier--signature::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(600px 400px at 85% -10%, rgba(181,122,126,.15), transparent 60%);
+      pointer-events: none;
+    }
+
+    .tier__number {
+      font-family: "Allura", cursive;
+      font-size: 46px;
+      line-height: 1;
+      color: var(--muted);
+      margin: 0 0 2px;
+    }
+    .tier__label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .30em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 16px;
+    }
+
+    /* hook = problem first */
+    .tier__hook {
+      font-family: "Cormorant", Georgia, serif;
+      font-size: clamp(17px, 2vw, 20px);
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--fg);
+      margin: 0 0 8px;
+    }
+    .tier__subhook {
+      font-family: "Cormorant", Georgia, serif;
+      font-size: 15px;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--muted);
+      margin: 0 0 20px;
+    }
+
+    h3.tier__name {
+      font-family: "Cormorant", Georgia, serif;
+      font-size: clamp(13px, 1.4vw, 15px);
+      font-weight: 400;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+
+    .tier__divider { height: 1px; background: var(--stroke); margin: 0 0 18px; }
+
+    /* method line */
+    .tier__method {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(20,22,27,.75);
+      margin: 0 0 14px;
+      line-height: 1.5;
+    }
+
+    .tier__items {
+      list-style: none;
+      padding: 0; margin: 0 0 20px;
+      display: flex; flex-direction: column; gap: 9px;
+      flex: 1;
+    }
+    .tier__item {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(20,22,27,.78);
+      display: flex; align-items: flex-start; gap: 9px;
+      line-height: 1.45;
+    }
+    .tier__item::before {
+      content: "—";
+      font-weight: 900;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* selling sentence */
+    .tier__sell {
+      font-family: "Cormorant", Georgia, serif;
+      font-size: 15px;
+      font-style: italic;
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--fg);
+      border-left: 2px solid var(--accent);
+      padding-left: 12px;
+      margin: 0 0 18px;
+    }
+    .tier--signature .tier__sell { color: #f2f2f2; border-color: var(--accent); }
+
+    .tier__price {
+      font-family: "Cormorant", Georgia, serif;
+      font-size: clamp(28px, 3.4vw, 36px);
+      font-weight: 600;
+      letter-spacing: -.02em;
+      color: var(--fg);
+      margin: 0 0 3px;
+      line-height: 1;
+    }
+    .tier__price-note {
+      font-size: 11px; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--muted); margin: 0 0 6px;
+    }
+
+    /* for-whom */
+    .tier__footer {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+      letter-spacing: .04em;
+      margin: 0 0 18px;
+      font-style: italic;
+    }
+
+    .tier__cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 100%; padding: 12px 18px; border-radius: 999px;
+      border: 1px solid var(--stroke2);
+      background: rgba(20,22,27,.06);
+      color: var(--fg);
+      font-size: 12px; font-weight: 900;
+      letter-spacing: .18em; text-transform: uppercase;
+      text-decoration: none;
+      transition: background .2s, border-color .2s, color .2s;
+      margin-top: auto;
+    }
+    .tier__cta:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+    /* ── below-tiers strip ── */
+    .tierFooter {
+      margin-top: 10px;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      background: rgba(20,22,27,.03);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tierFooter__line {
+      font-family: "Cormorant", Georgia, serif;
+      font-size: clamp(15px, 2vw, 18px);
+      font-style: italic;
+      color: var(--fg);
+      margin: 0;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .tierFooter__line span.mark {
+      font-style: normal;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .tierFooter__limited {
+      font-size: 11px; font-weight: 900;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--muted); margin: 0;
+    }
+
+    /* ── pointe ── */
+    .pointeWrap {
+      padding: 48px 32px;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      background: linear-gradient(160deg, rgba(20,22,27,.96), rgba(20,22,27,.88));
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .pointeWrap::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(700px 400px at 50% 120%, rgba(181,122,126,.15), transparent 60%);
+      pointer-events: none;
+    }
+    .pointeWrap blockquote {
+      position: relative;
+      margin: 0;
+      font-family: "Cormorant", Georgia, serif;
+      font-size: clamp(22px, 3.2vw, 34px);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.4;
+      color: #f2f2f2;
+      letter-spacing: -.01em;
+    }
+    .pointeWrap blockquote strong { font-weight: 600; }
+    .pointeWrap cite {
+      position: relative;
+      display: block; margin-top: 18px;
+      font-family: "Nunito Sans", sans-serif;
+      font-size: 11px; font-weight: 900;
+      letter-spacing: .24em; text-transform: uppercase;
+      color: rgba(255,255,255,.42); font-style: normal;
+    }
+
+    .notePill {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--stroke); border-radius: 999px;
+      padding: 8px 16px; font-size: 12px; font-weight: 800;
+      color: var(--muted); background: rgba(255,255,255,.55);
+      margin-top: 14px;
+    }
+    .notePill a { color: var(--fg); font-weight: 900; }
+
+    /* ── reveal ── */
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity .65s ease,transform .65s ease; }
+    .reveal.is-in { opacity:1; transform:translateY(0); }
+    .reveal.d1{transition-delay:.08s;} .reveal.d2{transition-delay:.16s;} .reveal.d3{transition-delay:.24s;}
+    @media(prefers-reduced-motion:reduce){.reveal{transition:none;}}
+  </style>
 </head>
 
-<body class="page-price" data-sale="birthday">
+<body class="page-price">
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <header class="topbar topbar--static" role="banner">
@@ -25,166 +294,204 @@
           <div class="brand__tag">The Art of Feeling. Amplified.</div>
         </div>
       </div>
-
       <nav class="nav nav--inline" aria-label="Navigation">
         <a href="index.html">Portfolio</a>
-        <a href="about.html">Über mich</a>
-        <a href="#preise">Preise</a>
-        <a href="#pakete">Pakete</a>
+        <a href="About.html">Über mich</a>
+        <a href="#angebote">Angebote</a>
         <a href="#hinweise">Hinweise</a>
         <a href="#kontakt">Kontakt</a>
       </nav>
-
       <div class="topbar__actions">
         <a class="pill" href="index.html">Portfolio</a>
-        <a class="pill" href="about.html">Über mich</a>
-        <a class="pill pill--accent" href="#preise">Preise</a>
+        <a class="pill pill--accent" href="#kontakt">Anfragen</a>
       </div>
     </div>
   </header>
 
   <main id="main" class="static">
+
     <section class="staticHero">
-      <p class="eyebrow">PREISLISTE</p>
-      <h1 class="h1"><span class="dropcapA">G</span>eburtstagsaktion</h1>
-      <p class="lead">Alle Preise aktuell <b>-50%</b>. Originalpreis bleibt sichtbar. Qualität bleibt Standard.</p>
+      <p class="eyebrow">Angebote · RE:BELLE™ Media</p>
+      <h1 class="h1"><span class="dropcapA">D</span>rei Ebenen.</h1>
+      <p class="lead" style="max-width:560px;">
+        Keine Einzelpreise. Keine Preis-Diskussionen.<br>
+        Wir sind kein Menü. Wir sind ein Prozess.
+      </p>
       <div class="staticCtas">
-        <a class="pill pill--accent" href="#kontakt">Anfragen</a>
+        <a class="pill pill--accent" href="#kontakt">Jetzt anfragen</a>
         <a class="pill" href="index.html">Portfolio ansehen</a>
       </div>
-      <div class="saleBanner">
-        <span class="saleBadge">-50%</span>
-        <span class="saleText">Aktion: <b>Geburtstagsaktion</b> · Umfang nach Kurzbriefing · transparent vorab.</span>
-      </div>
     </section>
 
-    <section class="staticSection" id="preise">
-      <h2 class="h2"><span class="dropcapA">P</span>reise</h2>
-      <p class="lead">Schwarz/weiß. Ruhig. Echt. Kein „Billig“ – nur Aktion.</p>
+    <section class="staticSection" id="angebote">
+      <p class="eyebrow reveal">Das Angebot</p>
+      <h2 class="h2 reveal d1"><span class="dropcapA">E</span>benen</h2>
 
-      <div class="priceTable" role="table" aria-label="Preisliste">
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Storytelling-Rezension</b><span>Text + Bild · Vor Ort</span></div>
-          <div class="priceRight" role="cell"><span class="old">620 €</span><span class="new">310 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Vor-Ort Reportage</b><span>ca. 2–3 Std.</span></div>
-          <div class="priceRight" role="cell"><span class="old">480 €</span><span class="new">240 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Ganztags-Reportage</b><span>Marke / Event / Dokumentation</span></div>
-          <div class="priceRight" role="cell"><span class="old">890 €</span><span class="new">445 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Hochzeit (Reportage)</b><span>ohne Inszenierung</span></div>
-          <div class="priceRight" role="cell"><span class="old">1.200 €</span><span class="new">600 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Seniorenheim / Pflege — mal anders</b><span>Image, Website, Angehörige</span></div>
-          <div class="priceRight" role="cell"><span class="old">520 €</span><span class="new">260 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Konzertfotografie</b><span>Club / kleiner Gig</span></div>
-          <div class="priceRight" role="cell"><span class="old">320 €</span><span class="new">160 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Konzertfotografie</b><span>Festival / Abend</span></div>
-          <div class="priceRight" role="cell"><span class="old">580 €</span><span class="new">290 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Lost Place & Industrie</b><span>Serie · Editorial · Markenstory</span></div>
-          <div class="priceRight" role="cell"><span class="old">540 €</span><span class="new">270 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Visitenkarten (Design)</b><span>Design</span></div>
-          <div class="priceRight" role="cell"><span class="old">160 €</span><span class="new">80 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Flyer A5/A6 (Design)</b><span>Design</span></div>
-          <div class="priceRight" role="cell"><span class="old">220 €</span><span class="new">110 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Flyer A4 / Folder</b><span>Design</span></div>
-          <div class="priceRight" role="cell"><span class="old">320 €</span><span class="new">160 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Plakat / Aushang</b><span>Design</span></div>
-          <div class="priceRight" role="cell"><span class="old">280 €</span><span class="new">140 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Landingpage (Onepager)</b><span>Gestaltung & Struktur</span></div>
-          <div class="priceRight" role="cell"><span class="old">680 €</span><span class="new">340 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Landingpage (Onepager)</b><span>Text + Gestaltung</span></div>
-          <div class="priceRight" role="cell"><span class="old">1.100 €</span><span class="new">550 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Feedpost (Grafik)</b><span>Social</span></div>
-          <div class="priceRight" role="cell"><span class="old">65 €</span><span class="new">32,50 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Story-Set (Grafik)</b><span>Social</span></div>
-          <div class="priceRight" role="cell"><span class="old">45 €</span><span class="new">22,50 €</span></div>
-        </div>
-        <div class="priceRow" role="row">
-          <div class="priceLeft" role="cell"><b>Betreuung (Monat)</b><span>8–12 Grafiken/Monat · grafikbasiert</span></div>
-          <div class="priceRight" role="cell"><span class="old">520 €</span><span class="new">260 €</span></div>
-        </div>
+      <div class="tiers">
+
+        <!-- 01 ENTRY -->
+        <article class="tier reveal">
+          <p class="tier__number">01</p>
+          <p class="tier__label">Entry</p>
+
+          <p class="tier__hook">Deine Marke wirkt –<br>aber nicht so, wie sie sollte.</p>
+          <p class="tier__subhook">Wir schauen nicht nur drauf. Wir zerlegen, was sichtbar ist – und was fehlt.</p>
+
+          <h3 class="tier__name">Brand Presence Audit</h3>
+
+          <div class="tier__divider"></div>
+
+          <ul class="tier__items">
+            <li class="tier__item">Analyse deiner aktuellen Außenwirkung</li>
+            <li class="tier__item">Klare Diagnose: Was dich aktuell klein hält</li>
+            <li class="tier__item">Konkrete Korrekturen (sofort umsetzbar)</li>
+            <li class="tier__item">Schriftliche Handlungsempfehlung</li>
+          </ul>
+
+          <p class="tier__sell">Kein Audit. Ein Wake-up Call.</p>
+
+          <p class="tier__price">190 – 390 €</p>
+          <p class="tier__price-note">Einmalig · nach Briefing</p>
+          <p class="tier__footer">Für alle, die spüren: „So wie es jetzt ist, funktioniert es nicht."</p>
+          <a class="tier__cta" href="#kontakt">Anfragen</a>
+        </article>
+
+        <!-- 02 CORE -->
+        <article class="tier reveal d1">
+          <p class="tier__number">02</p>
+          <p class="tier__label">Core</p>
+
+          <p class="tier__hook">Du bist sichtbar.<br>Aber nicht wiedererkennbar.</p>
+          <p class="tier__subhook">Wir bauen ein System, das dafür sorgt, dass Menschen dich verstehen – und bleiben.</p>
+
+          <h3 class="tier__name">Brand Presence System</h3>
+
+          <div class="tier__divider"></div>
+
+          <ul class="tier__items">
+            <li class="tier__item">Positionierung &amp; Markenstimme</li>
+            <li class="tier__item">Visuelle Sprache &amp; klare Ästhetik</li>
+            <li class="tier__item">Struktur für deinen Content (Web &amp; Social)</li>
+            <li class="tier__item">Optional: Conversion-Landingpage</li>
+          </ul>
+
+          <p class="tier__sell">Kein Content mehr ins Leere. Sondern ein System, das trägt.</p>
+
+          <p class="tier__price">2.500 – 5.000 €</p>
+          <p class="tier__price-note">Projektbasiert · Umfang nach Briefing</p>
+          <p class="tier__footer">Für Marken, die aufhören wollen, einfach nur zu posten.</p>
+          <a class="tier__cta" href="#kontakt">Anfragen</a>
+        </article>
+
+        <!-- 03 SIGNATURE -->
+        <article class="tier tier--signature reveal d2">
+          <p class="tier__number">03</p>
+          <p class="tier__label">Signature</p>
+
+          <p class="tier__hook">Deine Marke existiert.<br>Aber sie fühlt sich nicht nach dir an.</p>
+          <p class="tier__subhook">Wir bauen keinen Auftritt. Wir bauen Wirkung.</p>
+
+          <h3 class="tier__name">Editorial Brand Experience</h3>
+
+          <div class="tier__divider"></div>
+
+          <ul class="tier__items">
+            <li class="tier__item">Fotografie &amp; visuelles Storytelling</li>
+            <li class="tier__item">Komplettes Markenerlebnis (online &amp; offline)</li>
+            <li class="tier__item">Website / vollständiger Auftritt</li>
+            <li class="tier__item">Positionierung + Content-System</li>
+          </ul>
+
+          <p class="tier__sell">Das ist kein Projekt. Das ist der Moment, in dem deine Marke ernst genommen wird.</p>
+
+          <p class="tier__price">6.000 – 12.000 €</p>
+          <p class="tier__price-note">Vollständiges Projekt · auf Anfrage</p>
+          <p class="tier__footer">Für Marken, die nicht mehr übersehen werden wollen.</p>
+          <a class="tier__cta" href="#kontakt">Anfragen</a>
+        </article>
+
       </div>
+
+      <!-- below tiers -->
+      <div class="tierFooter reveal">
+        <p class="tierFooter__limited">Alle Angebote sind limitiert.</p>
+        <p class="tierFooter__line"><span class="mark">🖤</span>Weil gute Marken nicht im Massenbetrieb entstehen.</p>
+        <p class="tierFooter__line"><span class="mark">🖤</span>Ich verkaufe keine Pakete. Ich verkaufe Entscheidungen, die man nicht mehr zurücknehmen kann.</p>
+        <p class="tierFooter__line"><span class="mark">🖤</span>Wir sind kein Menü. Wir sind ein Prozess.</p>
+      </div>
+
+      <p class="notePill">
+        Einzelleistungen auf Anfrage als PDF —
+        <a href="mailto:rebelle.media.creator@gmail.com">rebelle.media.creator@gmail.com</a>
+      </p>
     </section>
 
-    <section class="staticSection" id="pakete">
-      <h2 class="h2"><span class="dropcapA">P</span>akete</h2>
-
-      <div class="staticGrid">
-        <article class="staticCard">
-          <h3>Kleines Markenpaket</h3>
-          <p>Flyer A5 + Visitenkarte + 6 Social-Grafiken</p>
-          <p class="priceInline"><span class="old">690 €</span><span class="new">345 €</span></p>
-        </article>
-        <article class="staticCard">
-          <h3>Sichtbarkeits-Paket</h3>
-          <p>Fotoreportage (halbtag) + Landingpage oder Flyer + 8 Grafiken</p>
-          <p class="priceInline"><span class="old">1.450 €</span><span class="new">725 €</span></p>
-        </article>
-        <article class="staticCard">
-          <h3>Storytelling-Paket</h3>
-          <p>Vor-Ort-Reportage + Fotostrecke + Erzähltext (Web/Social/Google)</p>
-          <p class="priceInline"><span class="old">980 €</span><span class="new">490 €</span></p>
-        </article>
-        <article class="staticCard">
-          <h3>Individuell</h3>
-          <p>Wenn du weißt, was du willst – bauen wir’s passend. Ohne Overkill.</p>
-          <p class="priceInline"><span class="new">Preis nach Kurzbriefing</span></p>
-        </article>
+    <!-- Pointe -->
+    <section class="staticSection">
+      <div class="pointeWrap reveal">
+        <blockquote>
+          Du verkaufst keine Flyer.<br>
+          Du verkaufst <strong>den Moment, in dem eine Marke<br>plötzlich ernst genommen wird.</strong>
+        </blockquote>
+        <cite>RE:BELLE™ Media · Wahrnehmungs-Architektur</cite>
       </div>
     </section>
 
     <section class="staticSection" id="hinweise">
-      <h2 class="h2"><span class="dropcapA">H</span>inweise</h2>
+      <p class="eyebrow reveal">Transparenz</p>
+      <h2 class="h2 reveal d1"><span class="dropcapA">H</span>inweise</h2>
       <div class="faqGrid">
-        <div class="faqItem"><b>Was ist drin?</b><span>Kurzbriefing, Umsetzung, Auswahl/Feinschnitt, saubere Übergabe.</span></div>
-        <div class="faqItem"><b>Fahrtkosten</b><span>Nach Entfernung / Absprache. Transparent vorab.</span></div>
-        <div class="faqItem"><b>Nutzungszweck</b><span>Privat / Web / Social / Print beeinflusst Umfang & Lizenz.</span></div>
+        <div class="faqItem reveal">
+          <b>Wie läuft es ab?</b>
+          <span>Kurzes Briefing-Gespräch, dann konkretes Angebot. Kein Overkill, kein Standardpaket von der Stange.</span>
+        </div>
+        <div class="faqItem reveal d1">
+          <b>Fahrtkosten</b>
+          <span>Nach Entfernung &amp; Absprache — transparent vorab kommuniziert.</span>
+        </div>
+        <div class="faqItem reveal d2">
+          <b>Nutzungsrechte</b>
+          <span>Privat / Web / Social / Print beeinflusst Umfang &amp; Lizenz. Wird im Briefing geklärt.</span>
+        </div>
       </div>
     </section>
 
     <section class="staticSection" id="kontakt">
-      <h2 class="h2"><span class="dropcapA">K</span>ontakt</h2>
+      <p class="eyebrow reveal">Bereit?</p>
+      <h2 class="h2 reveal d1"><span class="dropcapA">K</span>ontakt</h2>
+      <p class="lead reveal d2">Schreib mir. Kein Formular. Kein Funnel. Nur ein Gespräch.</p>
       <div class="contact">
-        <a class="contact__item" href="mailto:rebelle.media.creator@gmail.com"><span class="contact__k">Mail</span><span class="contact__v">rebelle.media.creator@gmail.com</span></a>
-        <a class="contact__item" href="https://newwomanintheshop.com" target="_blank" rel="noopener"><span class="contact__k">Shop</span><span class="contact__v">newwomanintheshop.com</span></a>
-        <a class="contact__item" href="https://rebellemedia.de" target="_blank" rel="noopener"><span class="contact__k">Website</span><span class="contact__v">rebellemedia.de</span></a>
-        <a class="contact__item" href="about.html"><span class="contact__k">Über mich</span><span class="contact__v">System · Partner</span></a>
+        <a class="contact__item" href="mailto:rebelle.media.creator@gmail.com">
+          <span class="contact__k">Mail</span>
+          <span class="contact__v">rebelle.media.creator@gmail.com</span>
+        </a>
+        <a class="contact__item" href="https://newwomanintheshop.com" target="_blank" rel="noopener">
+          <span class="contact__k">Shop</span>
+          <span class="contact__v">newwomanintheshop.com</span>
+        </a>
+        <a class="contact__item" href="https://quiet.rebellemedia.de" target="_blank" rel="noopener">
+          <span class="contact__k">Concierge</span>
+          <span class="contact__v">quiet.rebellemedia.de</span>
+        </a>
+        <a class="contact__item" href="About.html">
+          <span class="contact__k">Über mich</span>
+          <span class="contact__v">Wahrnehmungs-Architektin · RE:BELLE™ Media</span>
+        </a>
       </div>
-
       <footer class="rb-footer">
         <p>🖤 RE:BELLE™ Media</p>
         <p class="rb-footer__tag">The Art of Feeling. Amplified.</p>
-        <p class="rb-footer__links">🖤rebelle.media.creator@gmail.com&nbsp;&nbsp; 🖤newwomanintheshop.com&nbsp;&nbsp; 🖤rebellemedia.de</p>
+        <p class="rb-footer__links">🖤&nbsp;rebelle.media.creator@gmail.com&nbsp;&nbsp; 🖤&nbsp;newwomanintheshop.com&nbsp;&nbsp; 🖤🖤&nbsp;rebellemedia.denbsp;quiet.rebellemedia.de</p>
       </footer>
     </section>
+
   </main>
+
+  <script>
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);} });
+    }, {threshold:.10});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
 </body>
 </html>

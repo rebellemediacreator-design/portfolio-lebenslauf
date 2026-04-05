@@ -8,15 +8,193 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;600&family=Nunito+Sans:wght@400;600;800;900&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant:ital,wght@0,400;0,600;1,400&family=Nunito+Sans:wght@400;600;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body { overflow: auto; }
+
+    /* ── hero ── */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 560px;
+      display: grid;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero__img {
+      position: absolute;
+      inset: 0;
+      background: url("assets/images/street_02.jpg") center 30% / cover no-repeat;
+      transform: scale(1.04);
+      transition: transform 8s ease;
+    }
+    .hero__img.is-loaded { transform: scale(1); }
+    .hero__shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.04) 40%, rgba(0,0,0,.55) 100%);
+    }
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      padding: 0 clamp(20px,5vw,60px) clamp(36px,6vw,60px);
+      max-width: 860px;
+    }
+    .hero__eyebrow { font-size:11px;font-weight:900;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 10px; }
+    .hero__h1 { font-family:"Cormorant",Georgia,serif;font-size:clamp(38px,7vw,80px);font-weight:400;letter-spacing:-.02em;line-height:1.0;color:#fff;margin:0 0 16px; }
+    .hero__h1 em { font-style:italic;color:rgba(255,255,255,.82); }
+    .hero__lead { font-size:15px;line-height:1.7;color:rgba(255,255,255,.80);margin:0 0 22px;max-width:440px; }
+    .hero__actions { display:flex;gap:10px;flex-wrap:wrap; }
+    .hero__pill { display:inline-flex;align-items:center;padding:11px 20px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.45);color:#fff;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);transition:background .2s,border-color .2s; }
+    .hero__pill:hover { background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.7); }
+    .hero__pill--dark { background:#fff;color:#14161b;border-color:#fff; }
+    .hero__pill--dark:hover { background:rgba(255,255,255,.88); }
+    .scrollHint { position:absolute;bottom:28px;right:clamp(20px,5vw,60px);z-index:2;display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.55);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase; }
+    .scrollHint__line { width:32px;height:1px;background:rgba(255,255,255,.40); }
+
+    /* ── sections ── */
+    .section { width:min(1100px,calc(100% - 28px));margin:0 auto;padding:64px 0; }
+    .section + .section { border-top:1px solid var(--stroke); }
+    .section__eyebrow { font-size:11px;font-weight:900;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin:0 0 6px; }
+    .section__h2 { font-family:"Cormorant",Georgia,serif;font-size:clamp(28px,4.5vw,46px);font-weight:400;letter-spacing:-.02em;line-height:1.06;margin:0 0 40px;color:var(--fg); }
+    .section__h2 em { font-style:italic; }
+
+    /* ── gallery ── */
+    .gallery { display:grid;gap:6px; }
+    .gallery__hero { grid-column:1/-1;aspect-ratio:16/7;overflow:hidden;border-radius:16px; }
+    .gallery__row3 { display:grid;grid-template-columns:repeat(3,1fr);gap:6px; }
+    .gallery__row2 { display:grid;grid-template-columns:2fr 3fr;gap:6px; }
+
+    .gshot {
+      overflow:hidden;
+      border-radius:12px;
+      background:rgba(20,22,27,.06);
+      position:relative;
+      cursor:pointer;
+    }
+    .gshot img { width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;aspect-ratio:4/3; }
+    .gallery__hero .gshot { border-radius:0;height:100%; }
+    .gallery__hero .gshot img { aspect-ratio:unset;height:100%; }
+    .gshot:hover img { transform:scale(1.05); }
+    .gshot__cap {
+      position:absolute;bottom:0;left:0;right:0;
+      padding:32px 16px 14px;
+      background:linear-gradient(0deg,rgba(0,0,0,.6),transparent);
+      color:#fff;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+      opacity:0;transition:opacity .3s;
+      display:flex;align-items:flex-end;gap:8px;
+    }
+    .gshot:hover .gshot__cap { opacity:1; }
+    .gshot__zoom {
+      width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.6);
+      background:rgba(255,255,255,.15);backdrop-filter:blur(6px);
+      display:grid;place-items:center;flex-shrink:0;margin-left:auto;
+    }
+    .gshot__zoom svg { width:14px;height:14px;stroke:#fff;fill:none; }
+
+    @media(max-width:640px){
+      .gallery__row3{grid-template-columns:1fr 1fr;}
+      .gallery__row3 .gshot:last-child{display:none;}
+      .gallery__row2{grid-template-columns:1fr 1fr;}
+      .gallery__hero{aspect-ratio:4/3;}
+    }
+
+    /* ── LIGHTBOX ── */
+    .lb {
+      position:fixed;inset:0;z-index:9000;
+      background:rgba(14,14,16,.96);
+      backdrop-filter:blur(20px);
+      display:grid;place-items:center;
+      opacity:0;pointer-events:none;
+      transition:opacity .3s ease;
+    }
+    .lb.is-open { opacity:1;pointer-events:all; }
+
+    .lb__inner {
+      position:relative;
+      width:min(92vw, 1100px);
+      max-height:92svh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    .lb__img {
+      max-width:100%;
+      max-height:82svh;
+      object-fit:contain;
+      border-radius:10px;
+      box-shadow:0 40px 100px rgba(0,0,0,.6);
+      display:block;
+      transform:scale(.96);
+      transition:transform .3s ease;
+    }
+    .lb.is-open .lb__img { transform:scale(1); }
+
+    .lb__cap {
+      margin-top:14px;
+      font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+      color:rgba(255,255,255,.55);
+      text-align:center;
+    }
+
+    .lb__close {
+      position:absolute;top:-14px;right:0;
+      width:40px;height:40px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.2);
+      background:rgba(255,255,255,.08);
+      color:#fff;font-size:18px;
+      cursor:pointer;display:grid;place-items:center;
+      transition:background .2s;
+    }
+    .lb__close:hover { background:rgba(255,255,255,.18); }
+
+    .lb__prev, .lb__next {
+      position:fixed;top:50%;transform:translateY(-50%);
+      width:46px;height:46px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.2);
+      background:rgba(255,255,255,.08);
+      color:#fff;font-size:20px;
+      cursor:pointer;display:grid;place-items:center;
+      transition:background .2s;z-index:9001;
+    }
+    .lb__prev { left:16px; }
+    .lb__next { right:16px; }
+    .lb__prev:hover, .lb__next:hover { background:rgba(255,255,255,.18); }
+
+    .lb__counter {
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+      font-size:11px;font-weight:800;letter-spacing:.2em;
+      color:rgba(255,255,255,.45);
+    }
+
+    /* ── positioning ── */
+    .posGrid { display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center; }
+    @media(max-width:720px){.posGrid{grid-template-columns:1fr;gap:28px;}}
+    .posPhoto { border-radius:18px;overflow:hidden;aspect-ratio:3/4; }
+    .posPhoto img { width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(20%); }
+    .posText { display:flex;flex-direction:column;gap:18px; }
+    .posText p { font-family:"Cormorant",Georgia,serif;font-size:clamp(18px,2.2vw,22px);font-style:italic;line-height:1.55;color:var(--fg);margin:0; }
+    .posText .small { font-family:"Nunito Sans",sans-serif;font-size:13px;font-style:normal;line-height:1.72;color:var(--muted); }
+    .posCtas { display:flex;gap:10px;flex-wrap:wrap;margin-top:8px; }
+
+    .contactGrid { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+    @media(max-width:640px){.contactGrid{grid-template-columns:1fr;}}
+
+    /* ── reveal ── */
+    .reveal { opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease; }
+    .reveal.is-in { opacity:1;transform:translateY(0); }
+    .reveal.delay-1{transition-delay:.1s;} .reveal.delay-2{transition-delay:.2s;} .reveal.delay-3{transition-delay:.3s;}
+    @media(prefers-reduced-motion:reduce){.reveal{transition:none;}}
+  </style>
 </head>
 
 <body>
-  <a class="skip" href="#panel-1">Zum Inhalt springen</a>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
 
-  <header class="topbar" role="banner">
+  <header class="topbar topbar--static" role="banner" style="position:sticky;top:0;z-index:200;padding:10px 10px 0;background:rgba(246,244,241,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--stroke);">
     <div class="topbar__inner">
       <div class="brand" aria-label="Marke">
         <span class="brand__mark" aria-hidden="true">🖤</span>
@@ -25,230 +203,184 @@
           <div class="brand__tag">The Art of Feeling. Amplified.</div>
         </div>
       </div>
-
-      <nav class="nav" aria-label="Navigation">
-        <a href="#panel-1">Profil</a>
-        <a href="#panel-5">Arbeit</a>
-        <a href="#panel-7">Recent</a>
-        <a href="#panel-8">Kontakt</a>
+      <nav class="nav nav--inline" aria-label="Navigation">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#ueber">Über mich</a>
+        <a href="#kontakt">Kontakt</a>
       </nav>
-
       <div class="topbar__actions">
-        <a class="pill" href="./about.html">Über mich</a>
-        <a class="pill pill--accent" href="./Preisliste.html">Preise</a>
-
-        <a class="pill pill--lang" href="en/" aria-label="Switch to English">EN</a>
-        <button class="pill" id="themeBtn" type="button" aria-pressed="false" aria-label="Theme umschalten">Light · On</button>
+        <a class="pill" href="About.html">Über mich</a>
+        <a class="pill pill--accent" href="Preisliste.html">Angebote</a>
+        <a class="pill" href="en/">EN</a>
       </div>
     </div>
   </header>
 
-  <aside class="dots" aria-label="Sektionen">
-    <button class="dot is-active" data-to="panel-1" aria-label="Zu Profil"></button>
-    <button class="dot" data-to="panel-2" aria-label="Zu Fokus"></button>
-    <button class="dot" data-to="panel-3" aria-label="Zu Haltung"></button>
-    <button class="dot" data-to="panel-4" aria-label="Zu Arbeiten"></button>
-    <button class="dot" data-to="panel-5" aria-label="Zu Fotografie"></button>
-    <button class="dot" data-to="panel-6" aria-label="Zu Zusammenarbeit"></button>
-    <button class="dot" data-to="panel-7" aria-label="Zu Recent Work"></button>
-    <button class="dot" data-to="panel-8" aria-label="Zu Kontakt"></button>
-  </aside>
+  <main id="main">
 
-  <main class="snap" id="snapRoot">
+    <div class="hero">
+      <div class="hero__img" id="heroImg"></div>
+      <div class="hero__shade"></div>
+      <div class="hero__content">
+        <p class="hero__eyebrow">RE:BELLE™ Media · Portfolio</p>
+        <h1 class="hero__h1">Ruhig im Ton.<br><em>Scharf im Blick.</em></h1>
+        <p class="hero__lead">Unternehmerin · Fotografin · Wahrnehmungs-Architektin.<br>Ich baue Wirkung mit Struktur – und Bilder mit Haltung.</p>
+        <div class="hero__actions">
+          <a class="hero__pill hero__pill--dark" href="#portfolio">Arbeiten ansehen</a>
+          <a class="hero__pill" href="Preisliste.html">Angebote</a>
+          <a class="hero__pill" href="#kontakt">Anfragen</a>
+        </div>
+      </div>
+      <div class="scrollHint"><span class="scrollHint__line"></span>Scroll</div>
+    </div>
 
-    <section class="panel" id="panel-1" data-bg="assets/images/street_02.jpg">
-      <div class="panel__bg" aria-hidden="true"></div>
-      <div class="panel__shade" aria-hidden="true"></div>
-      <div class="panel__content">
-        <div class="glass reveal">
-          <p class="eyebrow">Portfolio</p>
-          <h1 class="h1">Ruhig im Ton.<br><span class="accent">Scharf im Blick.</span></h1>
-          <p class="lead">
-            Unternehmerin · Fotografin · Physiotherapeutin.<br>
-            Ich baue Wirkung mit Struktur – und Bilder mit Haltung.
+    <div class="section" id="portfolio">
+      <p class="section__eyebrow reveal">Recent · Observations</p>
+      <h2 class="section__h2 reveal delay-1">Stadt. Übergänge.<br><em>Menschen im Dazwischen.</em></h2>
+
+      <div class="gallery reveal delay-2">
+
+        <div class="gallery__hero">
+          <div class="gshot" data-src="assets/images/landscape_final_01.jpg" data-cap="Landscape · Editorial">
+            <img src="assets/images/landscape_final_01.jpg" alt="Landschaft – Schichten und Stille" loading="lazy">
+            <span class="gshot__cap">
+              Landscape · Editorial
+              <span class="gshot__zoom"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="gallery__row3">
+          <div class="gshot" data-src="assets/images/street_01.jpg" data-cap="Urban · Street 01">
+            <img src="assets/images/street_01.jpg" alt="Street 01" loading="lazy">
+            <span class="gshot__cap">Urban · Street 01 <span class="gshot__zoom"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg></span></span>
+          </div>
+          <div class="gshot" data-src="assets/images/street_02.jpg" data-cap="Urban · Street 02">
+            <img src="assets/images/street_02.jpg" alt="Street 02" loading="lazy">
+            <span class="gshot__cap">Urban · Street 02 <span class="gshot__zoom"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg></span></span>
+          </div>
+          <div class="gshot" data-src="assets/images/street_03.jpg" data-cap="Urban · Street 03">
+            <img src="assets/images/street_03.jpg" alt="Street 03" loading="lazy">
+            <span class="gshot__cap">Urban · Street 03 <span class="gshot__zoom"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg></span></span>
+          </div>
+        </div>
+
+        <div class="gallery__row2">
+          <div class="gshot" data-src="assets/images/urban_01.jpg" data-cap="Urban · Observation">
+            <img src="assets/images/urban_01.jpg" alt="Urban" loading="lazy">
+            <span class="gshot__cap">Urban · Observation <span class="gshot__zoom"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg></span></span>
+          </div>
+          <div class="gshot" data-src="assets/images/landscape_final_02.jpg" data-cap="Landscape · Light &amp; Mist">
+            <img src="assets/images/landscape_final_02.jpg" alt="Landschaft 02" loading="lazy">
+            <span class="gshot__cap">Landscape · Light &amp; Mist <span class="gshot__zoom"><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg></span></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section" id="ueber">
+      <div class="posGrid reveal">
+        <div class="posPhoto">
+          <img src="assets/images/about-hero.jpg" alt="RE:BELLE – Portrait" loading="lazy">
+        </div>
+        <div class="posText">
+          <p class="section__eyebrow" style="font-family:'Nunito Sans',sans-serif;">Wahrnehmungs-Architektin</p>
+          <p>„Ich erzähle nicht alles.<br>Ich zeige das Richtige."</p>
+          <p class="small">
+            Keine Canva-Designerin. Keine Social-Media-Managerin.<br><br>
+            Ich verbinde Bildsprache, Positionierung und Gefühl —
+            damit Marken nicht lauter werden müssen, sondern <em>klarer</em>.
+            Wirkung entsteht nicht durch Lärm. Sie entsteht durch Haltung.
           </p>
-          <div class="chips">
-            <span class="chip">Editorial</span>
-            <span class="chip">Konzert · Event</span>
-            <span class="chip">Brand-Content</span>
-            <span class="chip">Urban Observation</span>
-          </div>
-          <div class="ctaRow">
-            <a class="cta" href="#panel-8">Kontakt</a>
-            <a class="cta ghost" href="https://portfolio.rebellemedia.de/" target="_blank" rel="noopener">Online Portfolio</a>
-          </div>
-          <div class="mini">
-            <span class="mini__label">Prinzip</span>
-            <span class="mini__text">Qualität ist leise. Aber sichtbar.</span>
+          <div class="posCtas">
+            <a class="pill pill--accent" href="Preisliste.html">Angebote ansehen</a>
+            <a class="pill" href="About.html">Über mich</a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="panel" id="panel-2" data-bg="assets/images/street_03.jpg">
-      <div class="panel__bg" aria-hidden="true"></div>
-      <div class="panel__shade" aria-hidden="true"></div>
-      <div class="panel__content">
-        <div class="glass reveal">
-          <p class="eyebrow">CH-Business</p>
-          <h2 class="h2">Substanz vor Show.</h2>
-          <p class="lead">
-            Ruhig, präzise, langfristig. Keine leeren Versprechen – nur saubere Entscheidungen
-            und ein Ergebnis, das auch unter Druck steht.
-          </p>
-          <div class="grid2">
-            <div class="card">
-              <h3>Wie ich ticke</h3>
-              <p>Beobachten. Verdichten. Umsetzen. Kein Drama, kein Lärm.</p>
-            </div>
-            <div class="card">
-              <h3>Was zählt</h3>
-              <p>Qualität, Verantwortung, Timing – und ein Look, der nicht erklärt werden muss.</p>
-            </div>
-          </div>
-        </div>
+    <div class="section" id="kontakt">
+      <p class="section__eyebrow reveal">Bereit?</p>
+      <h2 class="section__h2 reveal delay-1">Anfragen</h2>
+      <div class="contactGrid reveal delay-2">
+        <a class="contact__item" href="mailto:rebelle.media.creator@gmail.com"><span class="contact__k">Mail</span><span class="contact__v">rebelle.media.creator@gmail.com</span></a>
+        <a class="contact__item" href="https://portfolio.rebellemedia.de/" target="_blank" rel="noopener"><span class="contact__k">Portfolio</span><span class="contact__v">portfolio.rebellemedia.de</span></a>
+        <a class="contact__item" href="https://newwomanintheshop.com" target="_blank" rel="noopener"><span class="contact__k">Shop</span><span class="contact__v">newwomanintheshop.com</span></a>
+        <a class="contact__item" href="https://quiet.rebellemedia.de" target="_blank" rel="noopener"><span class="contact__k">Concierge</span><span class="contact__v">quiet.rebellemedia.de</span></a>
       </div>
-    </section>
-
-    <section class="panel" id="panel-3" data-bg="assets/images/urban_01.jpg">
-      <div class="panel__bg" aria-hidden="true"></div>
-      <div class="panel__shade" aria-hidden="true"></div>
-      <div class="panel__content">
-        <div class="glass reveal">
-          <p class="eyebrow">Haltung</p>
-          <h2 class="h2">Ich erzähle nicht alles.<br>Ich zeige das Richtige.</h2>
-          <p class="lead">Storytelling ohne Kitsch. Ästhetik ohne Deko. Klarheit ohne Kälte.</p>
-          <ul class="list">
-            <li><span class="bullet"></span><span>Diskrete Präsenz statt Selbstdarstellung</span></li>
-            <li><span class="bullet"></span><span>Editorial Feeling mit Struktur</span></li>
-            <li><span class="bullet"></span><span>Wirkung im Bild: Rhythmus, Linie, Atem</span></li>
-          </ul>
-          <div class="mini">
-            <span class="mini__label">Arbeitsweise</span>
-            <span class="mini__text">Ich beobachte, bevor ich urteile.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" id="panel-4" data-bg="assets/images/street_01.jpg">
-      <div class="panel__bg" aria-hidden="true"></div>
-      <div class="panel__shade" aria-hidden="true"></div>
-      <div class="panel__content">
-        <div class="glass reveal">
-          <p class="eyebrow">Was ich mache</p>
-          <h2 class="h2">Fotografie + Strategie.<br>Sauber verknüpft.</h2>
-          <p class="lead">
-            Ich kombiniere Bildsprache, Struktur und Gefühl – damit Marken nicht lauter werden müssen,
-            sondern klarer.
-          </p>
-          <div class="grid3">
-            <div class="stat"><div class="stat__num">Editorial</div><div class="stat__label">Bildwelten</div></div>
-            <div class="stat"><div class="stat__num">Event</div><div class="stat__label">Präsenz</div></div>
-            <div class="stat"><div class="stat__num">Brand</div><div class="stat__label">Wirkung</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" id="panel-5" data-bg="assets/images/street_02.jpg">
-      <div class="panel__bg" aria-hidden="true"></div>
-      <div class="panel__shade" aria-hidden="true"></div>
-      <div class="panel__content">
-        <div class="glass reveal">
-          <p class="eyebrow">Fotografie</p>
-          <h2 class="h2">Konzert · Event · Editorial.</h2>
-          <p class="lead">
-            Wenn du Bildmaterial brauchst, das nicht nach Werbung aussieht – sondern nach Haltung.
-          </p>
-          <div class="grid2">
-            <div class="card"><h3>Konzert / Event</h3><p>Bewegung, Licht, Nähe – ohne die Wahrheit zu glätten.</p></div>
-            <div class="card"><h3>Editorial / Brand</h3><p>Reduziert, hochwertig, klar. Für Premium-Umfelder.</p></div>
-          </div>
-          <div class="ctaRow">
-            <a class="cta ghost" href="https://portfolio.rebellemedia.de/" target="_blank" rel="noopener">Portfolio ansehen</a>
-            <a class="cta" href="#panel-8">Kontakt</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" id="panel-6" data-bg="assets/images/street_03.jpg">
-      <div class="panel__bg" aria-hidden="true"></div>
-      <div class="panel__shade" aria-hidden="true"></div>
-      <div class="panel__content">
-        <div class="glass reveal">
-          <p class="eyebrow">Zusammenarbeit</p>
-          <h2 class="h2">Wenn du Qualität willst,<br>die nicht schreit.</h2>
-          <p class="lead">
-            Kooperationen, Brand-Content, Editorials, Konzertsessions. Klarer Ablauf, saubere Kommunikation,
-            ruhige Umsetzung.
-          </p>
-          <ul class="list">
-            <li><span class="bullet"></span><span>Bildstrecken & Editorials</span></li>
-            <li><span class="bullet"></span><span>Brand-Content mit Substanz</span></li>
-            <li><span class="bullet"></span><span>Event- & Konzertfotografie</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel panel--clean" id="panel-7">
-      <div class="panel__content">
-        <div class="cleanHead reveal">
-          <p class="eyebrow">Recent · Observations</p>
-          <h2 class="h2">Stadt. Übergänge. Menschen im Dazwischen.</h2>
-          <p class="lead">Keine Erklärung. Nur Blick.</p>
-        </div>
-
-        <div class="gallery reveal delay-150" aria-label="Fotogalerie recent work">
-          <figure class="shot"><img src="assets/images/street_01.jpg" alt="Recent work 01" loading="lazy"></figure>
-          <figure class="shot"><img src="assets/images/street_02.jpg" alt="Recent work 02" loading="lazy"></figure>
-          <figure class="shot"><img src="assets/images/street_03.jpg" alt="Recent work 03" loading="lazy"></figure>
-          <figure class="shot"><img src="assets/images/urban_01.jpg" alt="Recent work 04" loading="lazy"></figure>
-        </div>
-
-        <div class="cleanFoot reveal delay-150">
-          <div class="mini">
-            <span class="mini__label">Arbeitsweise</span>
-            <span class="mini__text">Ich beobachte, bevor ich urteile.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel panel--final" id="panel-8">
-      <div class="panel__content">
-        <div class="finalStack reveal">
-          <div class="finalGrid" aria-label="Finale Landschaftsbilder">
-            <figure class="finalShot"><img src="assets/images/landscape_final_01.jpg" alt="Landscape – layers and quiet" loading="lazy"></figure>
-            <figure class="finalShot"><img src="assets/images/landscape_final_02.jpg" alt="River – light and mist" loading="lazy"></figure>
-          </div>
-          <p class="finalLine">Raum wirkt, wenn man ihn lässt.</p>
-        </div>
-
-        <div class="contactBlock reveal delay-150">
-          <p class="eyebrow">Kontakt</p>
-          <h2 class="h2">Anfragen</h2>
-
-          <div class="contact">
-            <a class="contact__item" href="mailto:rebelle.media.creator@gmail.com"><span class="contact__k">Mail</span><span class="contact__v">rebelle.media.creator@gmail.com</span></a>
-            <a class="contact__item" href="https://portfolio.rebellemedia.de/" target="_blank" rel="noopener"><span class="contact__k">Portfolio</span><span class="contact__v">portfolio.rebellemedia.de</span></a>
-            <a class="contact__item" href="https://newwomanintheshop.com" target="_blank" rel="noopener"><span class="contact__k">Shop</span><span class="contact__v">newwomanintheshop.com</span></a>
-            <a class="contact__item" href="https://rebellemedia.de" target="_blank" rel="noopener"><span class="contact__k">Website</span><span class="contact__v">rebellemedia.de</span></a>
-          </div>
-
-          <footer class="rb-footer">
-            <p>🖤 RE:BELLE™ Media</p>
-            <p class="rb-footer__tag">The Art of Feeling. Amplified.</p>
-            <p class="rb-footer__links">🖤rebelle.media.creator@gmail.com&nbsp;&nbsp; 🖤newwomanintheshop.com&nbsp;&nbsp; 🖤rebellemedia.de</p>
-          </footer>
-        </div>
-      </div>
-    </section>
+      <footer class="rb-footer">
+        <p>🖤 RE:BELLE™ Media</p>
+        <p class="rb-footer__tag">The Art of Feeling. Amplified.</p>
+        <p class="rb-footer__links">🖤&nbsp;rebelle.media.creator@gmail.com&nbsp;&nbsp; 🖤&nbsp;newwomanintheshop.com&nbsp;&nbsp; 🖤🖤&nbsp;rebellemedia.denbsp;quiet.rebellemedia.de</p>
+      </footer>
+    </div>
 
   </main>
 
-  <script src="app.js"></script>
+  <!-- LIGHTBOX -->
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Bild vergrößert">
+    <div class="lb__inner">
+      <button class="lb__close" id="lbClose" aria-label="Schließen">✕</button>
+      <img class="lb__img" id="lbImg" src="" alt="">
+      <p class="lb__cap" id="lbCap"></p>
+    </div>
+    <button class="lb__prev" id="lbPrev" aria-label="Vorheriges Bild">‹</button>
+    <button class="lb__next" id="lbNext" aria-label="Nächstes Bild">›</button>
+    <p class="lb__counter" id="lbCounter"></p>
+  </div>
+
+  <script>
+    // hero
+    const heroImg = document.getElementById('heroImg');
+    const hImg = new Image(); hImg.src='assets/images/street_02.jpg';
+    hImg.onload = () => heroImg.classList.add('is-loaded');
+
+    // reveal
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);} });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // lightbox
+    const shots = Array.from(document.querySelectorAll('.gshot'));
+    const lb    = document.getElementById('lb');
+    const lbImg = document.getElementById('lbImg');
+    const lbCap = document.getElementById('lbCap');
+    const lbCnt = document.getElementById('lbCounter');
+    let cur = 0;
+
+    function open(i) {
+      cur = i;
+      const s = shots[i];
+      lbImg.src = s.dataset.src;
+      lbImg.alt = s.dataset.cap || '';
+      lbCap.textContent = s.dataset.cap || '';
+      lbCnt.textContent = (i+1) + ' / ' + shots.length;
+      lb.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() {
+      lb.classList.remove('is-open');
+      document.body.style.overflow = '';
+      setTimeout(() => { lbImg.src=''; }, 300);
+    }
+    function prev() { open((cur - 1 + shots.length) % shots.length); }
+    function next() { open((cur + 1) % shots.length); }
+
+    shots.forEach((s, i) => s.addEventListener('click', () => open(i)));
+    document.getElementById('lbClose').addEventListener('click', close);
+    document.getElementById('lbPrev').addEventListener('click', prev);
+    document.getElementById('lbNext').addEventListener('click', next);
+    lb.addEventListener('click', e => { if(e.target === lb) close(); });
+
+    document.addEventListener('keydown', e => {
+      if(!lb.classList.contains('is-open')) return;
+      if(e.key==='Escape') close();
+      if(e.key==='ArrowLeft') prev();
+      if(e.key==='ArrowRight') next();
+    });
+  </script>
 </body>
 </html>
